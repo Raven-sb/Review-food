@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Khám phá những quán ăn được đánh giá cao nhất Việt Nam. Tìm kiếm, lọc và đọc review thật theo từng thành phố.">
+  <title>Vị Việt — Review ẩm thực Việt Nam</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="brand" href="#top" aria-label="Vị Việt - trang chủ">
+        <span class="brand-mark">🍜</span>
+        <span class="brand-text"><strong>Vị Việt</strong><small>Review ẩm thực Việt Nam</small></span>
+      </a>
+      <nav class="site-nav" aria-label="Điều hướng chính">
+        <a href="#top-picks">Top đánh giá</a>
+        <a href="#kham-pha">Khám phá</a>
+        <a href="#ve-chung-toi">Giới thiệu</a>
+      </nav>
+      <div class="header-actions">
+        <div class="source-switch" role="group" aria-label="Nguồn dữ liệu">
+          <button type="button" class="source-btn active" data-source="curated">Dữ liệu mẫu</button>
+          <button type="button" class="source-btn" data-source="api">Google Maps</button>
+        </div>
+        <button class="btn btn-outline icon-btn" id="btnSettings" type="button" title="Cấu hình Google Maps API" aria-label="Cấu hình Google Maps API">⚙</button>
+      </div>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="hero-deco deco-one" aria-hidden="true"></div>
+      <div class="hero-deco deco-two" aria-hidden="true"></div>
+      <div class="wrap hero-inner">
+        <div class="hero-copy">
+          <span class="eyebrow">🌟 Ẩm thực Việt · Đánh giá thực tế</span>
+          <h1>Ăn ngon không cần đoán.<br><em>Cứ theo đánh giá mà đi.</em></h1>
+          <p>Tổng hợp những quán ăn được yêu thích nhất từ Hà Nội vào đến miền Tây — điểm số, số lượt review và địa chỉ rõ ràng, chỉ chờ bạn ghé thử.</p>
+          <form class="hero-search" id="heroSearch" role="search" autocomplete="off">
+            <span class="search-icon" aria-hidden="true">⌕</span>
+            <input id="searchInput" type="search" placeholder="Tìm quán, món ăn hoặc thành phố…" autocomplete="off" aria-label="Tìm kiếm quán ăn">
+            <button class="btn btn-primary" type="submit">Tìm ngay</button>
+          </form>
+          <div class="hero-tags">
+            <span>Phổ biến:</span>
+            <button type="button" class="tag-link" data-quick-search="Phở">Phở</button>
+            <button type="button" class="tag-link" data-quick-search="Bánh mì">Bánh mì</button>
+            <button type="button" class="tag-link" data-quick-search="Cà phê">Cà phê</button>
+            <button type="button" class="tag-link" data-quick-search="Hải sản">Hải sản</button>
+          </div>
+        </div>
+        <div class="hero-stats" id="heroStats" aria-label="Thống kê dữ liệu"></div>
+      </div>
+    </section>
+
+    <section class="wrap section" id="top-picks">
+      <div class="section-head">
+        <div>
+          <span class="section-kicker">Đáng thử nhất</span>
+          <h2>Top quán điểm cao nhất</h2>
+          <p>Đây là những cái tên được đánh giá tốt nhất trong bộ dữ liệu hiện tại.</p>
+        </div>
+        <a class="text-link" href="#kham-pha">Xem tất cả →</a>
+      </div>
+      <div class="top-grid" id="topGrid"></div>
+    </section>
+
+    <section class="wrap section browse-section" id="kham-pha">
+      <div class="section-head">
+        <div>
+          <span class="section-kicker">Khám phá</span>
+          <h2>Tìm quán hợp vị bạn</h2>
+          <p id="resultSummary">Đang tải dữ liệu…</p>
+        </div>
+        <span class="source-badge" id="sourceBadge">Dữ liệu mẫu</span>
+      </div>
+
+      <div class="filters" aria-label="Bộ lọc">
+        <div class="filter-row">
+          <label class="control">
+            <span>Thành phố</span>
+            <select id="cityFilter" autocomplete="off"><option value="">Tất cả thành phố</option></select>
+          </label>
+          <label class="control">
+            <span>Điểm đánh giá</span>
+            <select id="ratingFilter" autocomplete="off">
+              <option value="0">Mọi điểm số</option>
+              <option value="4">Từ 4.0 ★</option>
+              <option value="4.3">Từ 4.3 ★</option>
+              <option value="4.5">Từ 4.5 ★</option>
+              <option value="4.7">Từ 4.7 ★</option>
+            </select>
+          </label>
+          <label class="control">
+            <span>Sắp xếp</span>
+            <select id="sortFilter" autocomplete="off">
+              <option value="rating">Điểm cao nhất</option>
+              <option value="reviews">Nhiều review nhất</option>
+              <option value="name">Tên A → Z</option>
+              <option value="price">Giá thấp đến cao</option>
+            </select>
+          </label>
+          <button class="btn btn-fav" id="favFilter" type="button" aria-pressed="false">♡ Yêu thích</button>
+        </div>
+        <div class="chip-row" id="cuisineChips" aria-label="Lọc theo loại món"></div>
+      </div>
+
+      <div class="place-grid" id="placeGrid"></div>
+      <div class="empty-state" id="emptyState" hidden>
+        <span class="empty-icon">🍽️</span>
+        <h3>Không tìm thấy quán nào</h3>
+        <p id="emptyText">Thử đổi bộ lọc hoặc từ khóa tìm kiếm nhé.</p>
+        <button class="btn btn-outline" id="btnClearFilters" type="button">Xóa bộ lọc</button>
+      </div>
+    </section>
+  </main>
+
+  <footer id="ve-chung-toi">
+    <div class="wrap footer-inner">
+      <div>
+        <a class="brand" href="#top">
+          <span class="brand-mark">🍜</span>
+          <span class="brand-text"><strong>Vị Việt</strong><small>Review ẩm thực Việt Nam</small></span>
+        </a>
+        <p>Web demo giúp bạn khám phá quán ăn ngon dựa trên điểm đánh giá. Dữ liệu mẫu mang tính minh họa; chuyển sang chế độ Google Maps API để xem dữ liệu thực tế.</p>
+      </div>
+      <div class="footer-note">
+        <strong>Nguồn dữ liệu</strong>
+        <p>Dữ liệu mẫu được biên soạn theo cách Google Maps hiển thị đánh giá. Để lấy dữ liệu thật, nhấn biểu tượng ⚙ và nhập Google Places API key.</p>
+      </div>
+    </div>
+  </footer>
+
+  <dialog class="modal" id="detailDialog" aria-labelledby="detailTitle">
+    <div class="modal-body" id="detailBody"></div>
+  </dialog>
+
+  <dialog class="modal modal-api" id="apiDialog" aria-labelledby="apiTitle">
+    <form method="dialog" class="modal-body">
+      <div class="modal-head">
+        <div>
+          <span class="section-kicker">Nâng cao</span>
+          <h2 id="apiTitle">Lấy dữ liệu từ Google Maps</h2>
+        </div>
+        <button class="close-btn" value="cancel" aria-label="Đóng">✕</button>
+      </div>
+      <p class="api-intro">Nhập <strong>Google Places API key</strong> đã bật <em>Places API (New)</em> để tải các quán có điểm từ 4.0 trở lên theo từng thành phố.</p>
+      <label class="control full">
+        <span>API key</span>
+        <input id="apiKeyInput" type="password" placeholder="AIza…" autocomplete="off" spellcheck="false">
+      </label>
+      <div class="api-grid">
+        <label class="control">
+          <span>Thành phố cần lấy</span>
+          <select id="apiCity"></select>
+        </label>
+        <label class="control">
+          <span>Điểm tối thiểu</span>
+          <select id="apiMinRating">
+            <option value="4">Từ 4.0 ★</option>
+            <option value="4.3" selected>Từ 4.3 ★</option>
+            <option value="4.5">Từ 4.5 ★</option>
+            <option value="4.7">Từ 4.7 ★</option>
+          </select>
+        </label>
+      </div>
+      <label class="check-line">
+        <input id="apiRemember" type="checkbox" checked>
+        <span>Lưu API key trên trình duyệt này</span>
+      </label>
+      <p class="api-warning">⚠️ Key nhập ở đây nằm ở phía client. Hãy tạo key riêng và giới hạn theo <strong>HTTP referrer</strong> trong Google Cloud, kèm giới hạn chỉ dùng Places API.</p>
+      <div class="api-actions">
+        <button class="btn btn-primary" id="btnFetchApi" type="button">⬇ Tải quán từ Google Maps</button>
+        <button class="btn btn-outline" id="btnClearApiCache" type="button">Xóa dữ liệu đã lưu</button>
+      </div>
+      <p class="api-status" id="apiStatus" role="status"></p>
+      <p class="api-help">Chưa có key? Xem hướng dẫn trong <code>README.md</code> của dự án.</p>
+    </form>
+  </dialog>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
